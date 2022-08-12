@@ -1,14 +1,14 @@
-import * as yup from 'yup';
-import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import logo from '../../img/logo.svg'
-
 import { Container, ContainerForm } from './style';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import { useContext } from 'react'
+import { AuthContext } from '../../Providers/UserContext'
+import { useForm } from "react-hook-form";
+import logo from '../../img/logo.svg'
+import * as yup from 'yup';
 
 function Login(){
+    const {Logar} = useContext(AuthContext);
 
     const history = useHistory()
 
@@ -21,15 +21,6 @@ function Login(){
         resolver: yupResolver(formSchema)
     })
 
-    const onSubmitFunction = (data) => {
-        console.log(data)
-        toast.promise(
-            axios.post("https://kenziehub.herokuapp.com/sessions", data)
-            .then((response) => localStorage.setItem("@user-data:user", JSON.stringify(response.data)))
-            .then(() => history.push("/home")), {pending: "Logando...", success: "Logado com sucesso", error: "Email ou senha inválido"}
-        )
-    }
-
     console.log(errors)
     return(
         <Container>
@@ -37,7 +28,7 @@ function Login(){
                 <ContainerForm>
                     <h2>Login</h2>
 
-                <form action="" on onSubmit={handleSubmit(onSubmitFunction)}>
+                <form action="" onSubmit={handleSubmit(Logar)}>
                     <label htmlFor="">Email</label>
                     <input placeholder='Email' type="text" {...register("email")}/>
                     <span>{errors.email?.message}</span>
@@ -48,7 +39,6 @@ function Login(){
 
 
                     <button type='submit' className='loginButtonEntrar'>Entrar</button>
-                    {/* onClick={() => history.push("/home")}  */}
                 </form>
                     <p>Ainda não possui uma conta?</p>
 

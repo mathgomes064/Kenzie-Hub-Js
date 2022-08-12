@@ -1,14 +1,15 @@
-import * as yup from 'yup';
-import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import logo from '../../img/logo.svg'
-import axios from "axios"
-import { toast } from 'react-toastify'
-
 import { Container, ContainerForm } from './style';
+import { AuthContext } from '../../Providers/UserContext';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useHistory } from 'react-router-dom';
+import { useContext } from 'react';
+import { useForm } from "react-hook-form";
+import logo from '../../img/logo.svg'
+import * as yup from 'yup';
 
 function Cadastro(){
+
+    const {onSubmitFunction} = useContext(AuthContext)
 
     const history = useHistory()
 
@@ -40,15 +41,6 @@ function Cadastro(){
     const {register, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(formSchema)
     })
-
-    const onSubmitFunction = (data) => {
-        console.log(data)
-        toast.promise(
-        axios.post("https://kenziehub.herokuapp.com/users", data)
-        .then((response) => setTimeout(history.push("/"), 5000))
-        .catch((err) => console.log(err)), {pending: "Cadastrando...", success: "Usuário cadastrado!", error: "Algo deu errado!"})
-        
-    }
     
     console.log(errors)
 

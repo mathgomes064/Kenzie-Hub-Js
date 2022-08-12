@@ -100,6 +100,14 @@ background-color: rgba(0, 0, 0, 0.5);
         color: white;
     }
 
+    span{
+        color: red;
+        font-size: 14px;
+        width: 92%;
+        display: flex;
+        align-items: center;
+    }
+
     button{
         width: 93%;
         height: 48px;

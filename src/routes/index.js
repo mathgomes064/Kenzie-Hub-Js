@@ -1,11 +1,10 @@
-import React from 'react';
-import { Route, Switch} from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
+import { Route, Switch} from 'react-router-dom'
 import Cadastro from '../pages/Cadastro';
+import React from 'react';
 import Login from '../pages/Login';
-import Home from '../pages/Home';
 import Modal from '../pages/Modal';
-import { useState } from 'react';
+import Home from '../pages/Home';
 
 export default function Router(){
 
