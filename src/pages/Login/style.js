@@ -3,7 +3,6 @@ import styled from 'styled-components'
 export const Container = styled.section`
 width: 100vw;
 height: 100vh;
-background-color: #121214;
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -58,6 +57,33 @@ gap: 35px;
         background-color: #343B41;
         padding-left: 10px;
         color: white;
+    }
+
+    .divDaSenha{
+        background-color: red;
+        width: 340px;
+        height: 50px;
+        border-radius: 4px;
+        background-color: #343B41;
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+    .olhoAberto{
+        width: 20px;
+        height: 20px;
+        margin: 0 10px 0 0;
+        color: white;
+        cursor: pointer;
+    }
+
+    .inputSenha{
+        width: 85%;
+        height: 50px;
+        outline: 0;
+        padding: 0 0 0 10px;
     }
 
     span{

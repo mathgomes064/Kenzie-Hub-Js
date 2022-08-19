@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Header = styled.header`
  width: 100vw;
  height: 72px;
- background-color: #121214;
  border-bottom: 1px solid #212529;
  display: flex;
  justify-content: center;
@@ -43,7 +42,6 @@ export const Header = styled.header`
 export const DivInfo = styled.div`
  width: 100vw;
  height: 100px;
- background-color: #121214;
  border-bottom: 1px solid #212529;
  display: flex;
  justify-content: center;
@@ -53,9 +51,43 @@ export const DivInfo = styled.div`
         width: 80%;
         height: 100px;
         display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .userInfo{
+        width: 40%;
+        height: 100px;
+        display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
+    }
+
+    .editButton{
+        width: 40%;
+        height: 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+    .editButton > button{
+        width: 32px;
+        height: 32px;
+        background-color: #212529;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .editButton > button:hover{
+        background-color: #868E96;
+        transition: 144ms;
     }
 
     h1{
@@ -98,7 +130,6 @@ height: 75vh;
 display: flex;
 flex-direction: column;
 align-items: center;
-background-color: #121214;
 
     .divDoHead{
         width: 80%;
@@ -159,9 +190,23 @@ background-color: #121214;
         color: white;
         height: 100%;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+        gap: 15px;
     }
+
+    .box > ul > div > .gear{
+        width: 25px;
+        height: 25px;
+        -webkit-animation:spin 4s linear infinite;
+        -moz-animation:spin 4s linear infinite;
+        animation:spin 4s linear infinite;
+    }
+
+    @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+    @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+    @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
     li{
         width: 98%;
@@ -172,7 +217,6 @@ background-color: #121214;
         display: flex;
         justify-content: center;
         align-items: center;
-        cursor: pointer;
     }
 
     /* li:hover{
@@ -196,7 +240,7 @@ background-color: #121214;
 
     .box > ul > li > div > div{
         height: 45px;
-        width: 40%;
+        width: 150px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -206,7 +250,14 @@ background-color: #121214;
         color: #868E96;
         font-size: 12px;
     }
-    .box > ul > li > div > div > button{
+
+    .box > ul > li > div > div > div{
+        width: 45%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .box > ul > li > div > div > div> button{
         width: 32px;
         height: 32px;
         background-color: #121214;
@@ -217,7 +268,7 @@ background-color: #121214;
         cursor: pointer;
     }
 
-    .box > ul > li > div > div > button:hover{
+    .box > ul > li > div > div > div> button:hover{
         background-color: #212529;
         transition: 144ms;
         cursor: pointer;

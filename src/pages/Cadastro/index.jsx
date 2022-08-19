@@ -1,15 +1,21 @@
 import { Container, ContainerForm } from './style';
+import { AiFillEyeInvisible } from 'react-icons/ai';
 import { AuthContext } from '../../Providers/UserContext';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useHistory } from 'react-router-dom';
 import { useContext } from 'react';
+import { AiFillEye } from 'react-icons/ai';
+import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import logo from '../../img/logo.svg'
 import * as yup from 'yup';
 
 function Cadastro(){
 
-    const {onSubmitFunction} = useContext(AuthContext)
+    const [mostrarSenha, setMostrarSenha] = useState(false)
+    const [mostrarSenhaConf, setMostrarSenhaConf] = useState(false)
+
+    const {cadastrarUsuario} = useContext(AuthContext)
 
     const history = useHistory()
 
@@ -56,7 +62,7 @@ function Cadastro(){
 
                     <p>Rapido e grátis, vamos nessa</p>
 
-                <form onSubmit={handleSubmit(onSubmitFunction)}>
+                <form onSubmit={handleSubmit(cadastrarUsuario)}>
 
                     <label htmlFor="">Nome</label>
                     <input placeholder='Digite aqui seu nome' type="text" {...register("name")}/>
@@ -67,11 +73,21 @@ function Cadastro(){
                     <span>{errors.email?.message}</span>
 
                     <label htmlFor="">Senha</label>
-                    <input placeholder='Digite aqui sua senha' type="password" {...register("password")}/>
+                    <div className='divDaSenha'>
+                        <input className='inputSenha' placeholder='Digite aqui sua senha' type={mostrarSenha? ("text"):("password")} {...register("password")}/> 
+                        {mostrarSenha?
+                        (<AiFillEye onClick={() => setMostrarSenha(!mostrarSenha)} className='olhoAberto'/>):
+                        (<AiFillEyeInvisible onClick={() => setMostrarSenha(!mostrarSenha)} className='olhoAberto'/>)}
+                    </div>
                     <span>{errors.password?.message}</span>
 
                     <label htmlFor="">Confirmar Senha</label>
-                    <input placeholder='Digite novamente sua senha' type="password" {...register("confirmPassword")}/>
+                    <div className='divDaSenha'>
+                        <input className='inputSenha' placeholder='Digite novamente sua senha' type={mostrarSenhaConf? ("text"):("password")} {...register("confirmPassword")}/>
+                        {mostrarSenhaConf?
+                        (<AiFillEye onClick={() => setMostrarSenhaConf(!mostrarSenhaConf)} className='olhoAberto'/>):
+                        (<AiFillEyeInvisible onClick={() => setMostrarSenhaConf(!mostrarSenhaConf)} className='olhoAberto'/>)}
+                    </div>
                     <span>{errors.confirmPassword?.message}</span>
 
                     <label htmlFor="">Bio</label>
@@ -84,7 +100,6 @@ function Cadastro(){
 
                     <label htmlFor="">Selecionar Modulo</label>
                     <select {...register("course_module")}>
-                        <option value=" - "> - </option>
                         <option value="1º Módulo">1º Módulo</option>
                         <option value="2º Módulo">2º Módulo</option>
                         <option value="3º Módulo">3º Módulo</option>

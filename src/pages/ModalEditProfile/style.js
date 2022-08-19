@@ -1,14 +1,21 @@
 import styled from 'styled-components'
 
 export const Container = styled.section`
-max-width: 100vw;
+min-width: 100vw;
+max-width: calc(100%);
 min-height: 100vh;
+box-sizing: border-box;
+position: absolute;
+top: 0px;
+left: 0px;
 display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
-padding: 0 0 5vh 0;
+padding: 5vh 0 5vh 0;
 overflow-x: hidden;
+z-index: 1000;
+background-color: rgba(0, 0, 0, 0.5);
 
     .imgButton{
         width: 370px;
@@ -50,21 +57,38 @@ flex-direction: column;
 align-items: center; 
 padding: 0 0 3vh 0;
     
+    div{
+        width: 90%;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
     h2{
         width: 100%;
-        margin-top: 30px;
         font-size: 18px;
         color: white;
         background-color: #212529;
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
     }
 
-    p{
-        margin: 30px 0;   
-        color: #868E96;
+    .voltar{
+        width: 67px;
+        height: 40px;
+        background-color: #343B41;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        border: none;
+        border-radius: 4px;
+    }
+
+    button:hover{
+        background-color: #868E96;
+        transition: 144ms;
     }
 
     form{

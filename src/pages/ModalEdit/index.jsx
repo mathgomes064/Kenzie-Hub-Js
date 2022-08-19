@@ -1,17 +1,16 @@
 import { AuthContext } from '../../Providers/UserContext';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useContext } from 'react';
-import { ModalBox } from './style';
+import { ModalBoxEdit } from './style';
 import { useForm } from "react-hook-form";
 import { motion } from 'framer-motion'
 import * as yup from 'yup';
 
-function Modal({setModal}){
+function ModalEdit({setModalEdit}){
 
-    const {cadastrarTecnologia} = useContext(AuthContext);
+    const {editarTecnologia, id, title} = useContext(AuthContext);
     
     const formSchema = yup.object().shape({
-        title: yup.string().required("Nome da tecnologia obrigatório"),
         status: yup.string().required("Status obrigatório")
     })
 
@@ -20,7 +19,7 @@ function Modal({setModal}){
     })
 
     function middleware(data){
-        cadastrarTecnologia(data, setModal)
+        editarTecnologia(data, setModalEdit, id)
     }
     
     return(
@@ -29,20 +28,19 @@ function Modal({setModal}){
             animate={{opacity:1}}
             exit={{opacity:0}}
             transition={{duration:1}}>
-            <ModalBox>
+            <ModalBoxEdit>
 
                 <div className='modal'>
                     <div>
                         <div>
-                            <h2>Cadastrar Tecnologia</h2>
-                            <button onClick={() => setModal(true)}>X</button>
+                            <h2>Editar Tecnologia</h2>
+                            <button onClick={() => setModalEdit(true)}>X</button>
                         </div>
                     </div>
 
                     <form action="" onSubmit={handleSubmit(middleware)}>
                         <label htmlFor="">Nome</label>
-                        <input type="text" {...register("title")}/>
-                        <span>{errors.title?.message}</span>
+                        <p>{title}</p>
 
                         <label htmlFor="">Selecionar status</label>
                         <select {...register("status")}>
@@ -57,9 +55,9 @@ function Modal({setModal}){
 
                 </div>
             
-            </ModalBox>
+            </ModalBoxEdit>
         </motion.div>
     )
 }
 
-export default Modal;
+export default ModalEdit;

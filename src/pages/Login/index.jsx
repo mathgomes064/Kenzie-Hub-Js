@@ -1,13 +1,18 @@
 import { Container, ContainerForm } from './style';
+import { useContext, useState } from 'react'
+import { AiFillEyeInvisible } from 'react-icons/ai';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useHistory } from 'react-router-dom';
-import { useContext } from 'react'
 import { AuthContext } from '../../Providers/UserContext'
-import { useForm } from "react-hook-form";
+import { useHistory } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { AiFillEye } from 'react-icons/ai';
 import logo from '../../img/logo.svg'
 import * as yup from 'yup';
 
 function Login(){
+
+    const [mostarSenha, setMostarSenha] = useState(false)
+
     const {Logar} = useContext(AuthContext);
 
     const history = useHistory()
@@ -34,9 +39,14 @@ function Login(){
                     <span>{errors.email?.message}</span>
 
                     <label htmlFor="">Senha</label>
-                    <input placeholder='Senha' type="password" {...register("password")}/>
+                    <div className='divDaSenha'>
+                            <input className='inputSenha' placeholder='Senha' type={mostarSenha? ("text"):("password")} {...register("password")}/>
+                            {mostarSenha?
+                             (<AiFillEye onClick={() => setMostarSenha(!mostarSenha)} className='olhoAberto'/>):
+                             (<AiFillEyeInvisible onClick={() => setMostarSenha(!mostarSenha)} className='olhoAberto'/>)}
+                            
+                    </div>
                     <span>{errors.password?.message}</span>
-
 
                     <button type='submit' className='loginButtonEntrar'>Entrar</button>
                 </form>

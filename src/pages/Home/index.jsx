@@ -1,20 +1,28 @@
 import { Header, DivInfo, Tecnologias} from './style';
-import { useHistory } from 'react-router-dom';
-import { AuthContext } from '../../Providers/UserContext';
 import { useContext, useEffect } from 'react';
+import { FaRegTrashAlt } from 'react-icons/fa';
+import { AiFillEdit } from  'react-icons/ai'
+import { BsFillGearFill } from 'react-icons/bs'
+import { AuthContext } from '../../Providers/UserContext';
+import { useHistory } from 'react-router-dom';
 import { useState } from 'react';
-import {FaRegTrashAlt} from 'react-icons/fa';
+import { toast } from 'react-toastify';
 import Modal from '../Modal';
+import ModalEdit from '../ModalEdit';
+import EditCadastro from '../ModalEditProfile';
 import logo from '../../img/logo.svg';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 
 function Home(){
     const history = useHistory()
 
-    const {user, atualizarUsuario, token} = useContext(AuthContext);
+    const {user, atualizarUsuario, token, setId, setStatus, setTitle} = useContext(AuthContext);
 
     const [modal, setModal] = useState(true)
+
+    const [modalEdit, setModalEdit] = useState(true)
+
+    const [modalEditProfile, setModalEditProfile] = useState(true)
     
     async function deletarTech(id){
             await axios.delete(`https://kenziehub.herokuapp.com/users/techs/${id}`,{
@@ -41,8 +49,14 @@ function Home(){
 
             <DivInfo>
                 <div>
-                    <h1>Olá, {user.name}</h1>
-                    <p>{user.course_module} ({user.bio})</p>
+                    <div className='userInfo'>
+                        <h1>Olá, {user.name}</h1>
+                        <p>{user.course_module} ({user.bio})</p>
+                    </div>
+
+                    <div className='editButton'>
+                        <button onClick={() => setModalEditProfile(false)}><AiFillEdit/></button>
+                    </div>
                 </div>
             </DivInfo>
 
@@ -57,7 +71,8 @@ function Home(){
                         {user?.techs?.length === 0?
                          (
                             <div>
-                                <h1>Adicione uma tecnologia</h1>
+                                <h1>Adicione uma tecnologia...</h1>
+                                <BsFillGearFill className='gear'/>
                             </div>
                          ):
                          (
@@ -67,7 +82,10 @@ function Home(){
                                         <h2>{tech.title}</h2>
                                         <div>
                                             <p>{tech.status}</p>
-                                            <button onClick={() => deletarTech(tech.id)}><FaRegTrashAlt/></button>
+                                            <div>
+                                                <button onClick={() => {setModalEdit(false); setId(tech.id); setStatus(tech.status); setTitle(tech.title)}}><AiFillEdit/></button>
+                                                <button onClick={() => deletarTech(tech.id)}><FaRegTrashAlt/></button>
+                                            </div>
                                         </div>
                                     </div>
                                 </li>
@@ -77,6 +95,20 @@ function Home(){
                 </div>
 
             </Tecnologias>
+
+            {modalEditProfile?
+            (""):
+
+            (<EditCadastro setModalEditProfile={setModalEditProfile}/>)
+            
+            }
+
+            {
+                modalEdit?
+                (""):
+
+                (<ModalEdit setModalEdit={setModalEdit}/>)
+}
 
             {
                 modal?

@@ -23,7 +23,7 @@ const AuthProvider = ({children}) =>{
         )
     }
     
-    function cadastrarTecnologia(data){
+    function cadastrarTecnologia(data, setModal){
         setTech([data, ...tech])
         
         axios.post("https://kenziehub.herokuapp.com/users/techs", data, {
@@ -32,10 +32,29 @@ const AuthProvider = ({children}) =>{
             }
         })
         .then((response) => {atualizarUsuario(); toast.success("Tecnologia Cadastrada")})
+        .then((response) => setModal(true))
         .catch((err) => console.log(err))
     }
     
     useEffect(atualizarUsuario, [])
+
+    const [id, setId] = useState("")
+
+    const [status, setStatus] = useState("")
+
+    const [title, setTitle] = useState("")
+
+    function editarTecnologia(data, setModalEdit, id){
+
+        axios.put(`https://kenziehub.herokuapp.com/users/techs/${id}`, data, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then((response) => {atualizarUsuario(); toast.success("Tecnologia Modificada")})
+        .then((response) => setModalEdit(true))
+        .catch((err) => console.log(err))
+    }
 
     function atualizarUsuario(){
         axios.get("https://kenziehub.herokuapp.com/profile", {
@@ -49,22 +68,42 @@ const AuthProvider = ({children}) =>{
         .catch((err) => { history.push("/"); localStorage.clear()})
     }
 
-    const onSubmitFunction = (data) => {
+    const cadastrarUsuario = (data) => {
         console.log(data)
         toast.promise(
         axios.post("https://kenziehub.herokuapp.com/users", data)
         .then((response) => setTimeout(history.push("/"), 5000))
         .catch((err) => console.log(err)), {pending: "Cadastrando...", success: "Usuário cadastrado!", error: "Algo deu errado!"})
     }
+
+    function editarUsuario(data, setModalEditProfile){
+        axios.put("https://kenziehub.herokuapp.com/profile", data, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then((response) => {console.log(response); atualizarUsuario(); toast.success("Usuário Editado")})
+        .then((response) => setModalEditProfile(true))
+        .catch((err) => console.log(err))
+    }
     
     return(
         <AuthContext.Provider value={{
-        Logar,
+         Logar,
          user,
          cadastrarTecnologia,
          atualizarUsuario,
          token,
-         onSubmitFunction}}>
+         cadastrarUsuario,
+         id,
+         setId,
+         status, 
+         setStatus,
+         title,
+         setTitle,
+         editarTecnologia,
+         editarUsuario
+         }}>
             {children}
         </AuthContext.Provider>
     )

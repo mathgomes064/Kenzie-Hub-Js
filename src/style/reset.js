@@ -47,6 +47,12 @@ const Reset = createGlobalStyle`
     border-collapse: collapse;
     border-spacing: 0;
   }
+
+  @media screen and (min-width: 768px){
+    body{
+      overflow-x: hidden;
+    }
+  }
 `;
 
 export default Reset;
