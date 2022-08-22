@@ -1,15 +1,15 @@
 import { Header, DivInfo, Tecnologias} from './style';
-import { useContext, useEffect } from 'react';
-import { FaRegTrashAlt } from 'react-icons/fa';
-import { AiFillEdit } from  'react-icons/ai'
 import { BsFillGearFill } from 'react-icons/bs'
+import { FaRegTrashAlt } from 'react-icons/fa';
 import { AuthContext } from '../../Providers/UserContext';
 import { useHistory } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+import { AiFillEdit } from  'react-icons/ai'
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import Modal from '../Modal';
 import ModalEdit from '../ModalEdit';
-import EditCadastro from '../ModalEditProfile';
+import EditCadastro from '../ModalEditProfile';  
 import logo from '../../img/logo.svg';
 import axios from 'axios';
 
@@ -34,7 +34,7 @@ function Home(){
                 .catch((err) => toast.error("Algo deu errado"))   
     }
 
-    useEffect(atualizarUsuario, []);
+    useEffect(() => {atualizarUsuario()}, [])
         
     return(
     
@@ -96,10 +96,11 @@ function Home(){
 
             </Tecnologias>
 
-            {modalEditProfile?
-            (""):
+            {   
+                modalEditProfile?
+                (""):
 
-            (<EditCadastro setModalEditProfile={setModalEditProfile}/>)
+                (<EditCadastro setModalEditProfile={setModalEditProfile}/>)
             
             }
 
@@ -108,7 +109,7 @@ function Home(){
                 (""):
 
                 (<ModalEdit setModalEdit={setModalEdit}/>)
-}
+            }
 
             {
                 modal?

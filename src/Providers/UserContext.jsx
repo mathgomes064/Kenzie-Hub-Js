@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react"; 
+import { createContext, useState } from "react"; 
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -35,8 +35,6 @@ const AuthProvider = ({children}) =>{
         .then((response) => setModal(true))
         .catch((err) => console.log(err))
     }
-    
-    useEffect(atualizarUsuario, [])
 
     const [id, setId] = useState("")
 
@@ -62,9 +60,7 @@ const AuthProvider = ({children}) =>{
                 'Authorization': `Bearer ${token}`
             }
         })
-        .then((response) => { 
-            setUser(response.data)
-            history.push("/home")})
+        .then((response) => {setUser(response.data); history.push("/home")})
         .catch((err) => { history.push("/"); localStorage.clear()})
     }
 
@@ -82,7 +78,7 @@ const AuthProvider = ({children}) =>{
                 'Authorization': `Bearer ${token}`
             }
         })
-        .then((response) => {console.log(response); atualizarUsuario(); toast.success("Usuário Editado")})
+        .then((response) => {atualizarUsuario(); toast.success("Usuário Editado")})
         .then((response) => setModalEditProfile(true))
         .catch((err) => console.log(err))
     }

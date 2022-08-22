@@ -66,6 +66,7 @@ function EditCadastro({setModalEditProfile}){
 
                         <label htmlFor="">Selecionar Modulo</label>
                         <select {...register("course_module")}>
+                            <option value=""></option>
                             <option value="1º Módulo">1º Módulo</option>
                             <option value="2º Módulo">2º Módulo</option>
                             <option value="3º Módulo">3º Módulo</option>
